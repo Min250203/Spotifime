@@ -1,0 +1,511 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary-color: #ec1f55;
+    --text-color: #333;
+}
+
+html {
+    /* height: 100%; */
+    font-family: sans-serif;
+}
+
+#container {
+    width: 100%;
+    height: 100vh;
+    background-color: #000;
+    display: flex;
+    flex-direction: column;
+}
+
+#Login {
+    display: none;
+    height: 100vh;
+    background: url(./image/backgroundLogin.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+
+}
+
+.infor__playlist {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 88%;
+}
+
+.container__slide-leftbar {
+    width: 19%;
+    /* padding: 10px 10px 0 10px; */
+    padding-top: 10px;
+    color: #b3b3b3;
+
+    height: 100%;
+}
+
+.content {
+    height: 100%;
+    border-radius: 15px;
+    width: 100%;
+    color: #fff;
+    background-color: #121212;
+}
+
+.head__infor {
+    padding: 20px;
+
+    /* height: 15%; */
+
+}
+
+.home {
+    color: #fff;
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    cursor: pointer;
+
+}
+
+.search {
+    cursor: pointer;
+    display: flex;
+    gap: 15px;
+
+}
+
+.nav__played-left {
+    margin-top: 10px;
+    padding: 20px 20px 0 20px;
+    background-color: #121212;
+    /* background-color: rgb(#121212, #121212, #121212, 0); */
+    color: #b3b3b3;
+    border-radius: 15px;
+    font-size: 19px;
+    height: 80%;
+    position: relative;
+    overflow: hidden;
+}
+
+/* .nav__played-left:hover{
+    color: #fff;
+} */
+
+.library {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+
+}
+
+.library__name,
+.library__icon {
+    display: flex;
+    gap: 15px;
+}
+
+
+.list__progam-played {
+    display: flex;
+    margin-bottom: 15px;
+    gap: 10px;
+
+}
+
+.artist,
+.playlist__played {
+    padding: 8px 12px;
+    background-color: #232323;
+    border-radius: 17px;
+    font-size: 13px;
+}
+
+.search__nav {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 15px;
+    margin-bottom: 25px;
+
+}
+
+.list1 {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.img__played {
+    width: 55px;
+    height: 55px;
+    background-color: #545454;
+}
+
+.icon__slidenav {
+    font-size: 23px;
+}
+
+.container__maincontent {
+    width: 80%;
+    padding-top: 10px;
+    position: relative;
+    height: 100%;
+
+}
+
+.nav__main {
+    height: 100%;
+    background-color: #493e3e;
+    border-radius: 15px;
+}
+
+.desc__contentmain {
+    height: 90%;
+    position: relative;
+    padding: 0px 20px 20px;
+}
+
+.nav__main-top {
+    /* position: fixed; */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    height: 63px;
+    /* background-color: #938989; */
+    /* width: 77%; */
+    padding: 5px 20px;
+}
+
+.icon__headnav {
+    padding: 10px 12px;
+    background-color: #211c1c;
+    color: #9c9c9c;
+    border-radius: 50%;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.head__content-title {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: 10px 0 20px 0;
+}
+
+.head__title {
+    font-size: 30px;
+}
+
+.use__list1 {
+    border-radius: 7px;
+    padding: 5px;
+    background-color: #4f3e32;
+    display: flex;
+    gap: 10px;
+    height: 50px;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.children__content {
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.library__parent {
+    /* position: relative; */
+}
+
+.search__inlibrary {
+    height: 80%;
+    overflow-y: scroll;
+
+}
+
+.parent__nav-left {
+    height: 100%;
+    /* display: flex;
+    flex-direction: column;
+    gap: 10px; */
+}
+
+.list__playedlibrary {
+    height: 86%;
+}
+
+.container__audio {
+    display: flex;
+    position: fixed;
+    height: 80px;
+    bottom: 0;
+    /* background-color: #5d3f22; */
+    /* height: 13%; */
+    width: 100%;
+}
+
+.head_f1 {
+    background-color: #121212;
+    color: #b3b3b3;
+    border-radius: 15px;
+    font-size: 19px;
+}
+
+.navvv {
+    height: 100%;
+}
+
+.infor__music {
+    width: 30%;
+    color: #fff;
+    height: 100%;
+}
+
+.control {
+    padding-bottom: 10px;
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.audio__icon {
+    display: flex;
+}
+
+.btn {
+    color: #b3b3b3;
+    padding: 18px;
+    font-size: 18px;
+}
+
+.progress {
+    width: 100%;
+    -webkit-appearance: none;
+    height: 6px;
+    background-color: #d3d3d3;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+}
+
+.progress::-webkit-slider-thumb {
+
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 6px;
+    background-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.control .icon-pause {
+    display: none;
+}
+
+.infor__music {
+    display: flex;
+    padding: 10px 20px;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn-login {
+    padding: 10px;
+    margin-right: 10px;
+    outline: none;
+    cursor: pointer;
+    height: 45px;
+    border: none;
+    color: #fff;
+    background-color: #211c1c;
+    font-weight: 600;
+    border-radius: 50%;
+}
+
+.model-log {
+    margin: auto;
+    width: 30%;
+    height: 300px;
+    background-color: #fff;
+    position: relative;
+
+}
+
+.content_log {
+    display: flex;
+    flex-direction: column;
+    padding: 40px;
+}
+
+.head_log {
+    color: #967d7d;
+    padding-bottom: 20px;
+}
+
+.direct__yourPass {
+    text-align: center;
+}
+
+.email,
+.password {
+    height: 30px;
+    border: none;
+    border-bottom: 1px solid #a99898;
+    margin-bottom: 10px;
+    outline: none;
+}
+
+.direct__yourPass {
+    padding-top: 20px;
+    color: #967d7d;
+
+}
+
+.submit__ {
+    display: flex;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    height: 40px;
+    outline: none;
+}
+
+.btn__log-loged {
+    border: none;
+    width: 50%;
+    background-color: #ccc;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn__sing-singed {
+    background-color: #cb953c;
+    ;
+    border: none;
+    width: 50%;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.btn__exist {
+    padding: 20px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.nav__search {
+    display: none;
+    color: #fff;
+    width: 63%;
+    padding: 15px;
+    border-radius: 25px;
+    /* display: flex; */
+    gap: 10px;
+    background-color: #242424;
+}
+
+.nav__search:focus-within {
+    outline: auto;
+    /* outline-style: 1px solid #000; */
+}
+
+
+.nav__search-input {
+    outline: none;
+    border: none;
+    background-color: transparent;
+    color: #fff;
+    width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+
+}
+
+.nav__tool {
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+
+.icon__closeSearch {
+    cursor: pointer;
+}
+
+.content_search {
+    display: none;
+    padding: 10px 20px;
+    justify-content: center;
+    overflow-y: scroll;
+    height: 90%;
+}
+
+.playlist__render{
+    height: 225px;
+}
+
+.playlist__search{
+    height: 240px;
+}
+
+.card_box-sing {
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #181818;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    cursor: pointer;
+}
+
+.card_box-sing:hover{
+    background-color: #282828;
+}
+
+.img_singgle {
+    object-fit: cover;
+    width: 100%;
+    /* height: 70%; */
+    border-radius: 10px;
+}
+
+.content__infor,
+.list__musicForU,
+.list__musicMood,
+.list__musicHealth,
+.list__musicAcoustic {
+    display: grid;
+    grid-template-columns: repeat(6, 176px);
+    gap: 25px;
+    /* border-radius: 15px; */
+}
+
+.title_singgle {
+    font-weight: 600;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.desc_Singgle {
+    color: #a7a7a7;
+    font-size: 14px;
+    /* margin-top: -5px; */
+}
+
+.descr{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
