@@ -1,5 +1,6 @@
-
 import SearchMusic from "./searchMusic.js";
+import TrackPlaylist from "./trackPlaylist.js";
+
 const searchInput = $('.nav__search-input');
 const CLIENT_ID = "5445f83018404e0994fbce9fcfab2bf9";
 const CLIENT_SECRET = "1451411bff95447e93212555e8752662";
@@ -7,6 +8,22 @@ const musicFor = $('.list__musicForU');
 const musicMood = $('.list__musicMood');
 const musicHealth = $('.list__musicHealth');
 const musicAcoustic = $('.list__musicAcoustic');
+const musicTrack = $('.playlistTracks');
+const mainContent = $('.desc__contentmain');
+const iconHeadLeft = $('.left');
+const mainPage = $('.home');
+const mainInforList = $('.children__content');
+const mainInforPlaylist = $('.children__content-playlist');
+const albumSearch = $('.album_search');
+const playlistSearch = $('.playlist_search');
+const singSearch = $('.sing_search');
+const allSearch = $('.all_search');
+const tracksInforSearch = $('.content__infor-tracks');
+const albumsInforSearch = $('.content__infor-albums');
+const allInforSearch = $('.content__infor-all')
+
+
+
 
 
 const HomePageMusic = {
@@ -18,6 +35,8 @@ const HomePageMusic = {
     playlistMusicMoood: [],
     playlistMusicHealth: [],
     playlistAcoustic: [],
+    currentIndex: 0,
+    type: '',
     handleRenderMusic: async function () {
         let _this = this;
         // Api this.accessToken
@@ -35,7 +54,6 @@ const HomePageMusic = {
                 console.log(_this.accessToken)
             })
             .catch(error => console.error(error));
-        console.log(this.accessToken)
         // render type
         var categoriesParameters = {
             method: "GET",
@@ -52,12 +70,10 @@ const HomePageMusic = {
         await fetch('https://api.spotify.com/v1/browse/categories?country=VN&locale=VN&limit=50', categoriesParameters)
             .then(response => response.json())
             .then(data => {
-                console.log(data)
                 categoriesIDMusicForU = data.categories.items[3].id;
                 categoriesIDMood = data.categories.items[4].id;
                 categoriesIDHealth = data.categories.items[8].id;
                 categoriesIDAcoustic = data.categories.items[45].id;
-                // console.log(_this.playlistMusicForU)
             })
             .catch(error => console.error("e", error))
 
@@ -66,15 +82,13 @@ const HomePageMusic = {
         await fetch('https://api.spotify.com/v1/browse/categories/' + categoriesIDMusicForU + '/playlists' + '?limit=6', categoriesParameters)
             .then(response => response.json())
             .then(data => {
-                console.log("data playlist musicForU", data)
                 playlistIDMusicForU = data.playlists.items[0].id;
                 _this.playlistMusicForU = data.playlists.items;
-                console.log(_this.playlistMusicForU);
             })
             .catch(error => console.error("Error", error))
-        const listMusicForYou = _this.playlistMusicForU.map((item) => {
+        const listMusicForYou = _this.playlistMusicForU.map((item, index) => {
             return ` 
-                <div class="card_box-sing playlist__render">
+                <div class="card_box-sing ${index === this.currentIndex ? "active" : ""} playlist__render" data-Index=${index}>
                 <img class="img_singgle"
                     src="${item.images[0].url}"
                     alt="">
@@ -100,9 +114,9 @@ const HomePageMusic = {
                 _this.playlistMusicMoood = data.playlists.items;
             })
             .catch(error => console.error("Error", error))
-        const listMusicMood = _this.playlistMusicMoood.map((item) => {
+        const listMusicMood = _this.playlistMusicMoood.map((item, index) => {
             return `
-                <div class="card_box-sing playlist__render">
+                <div class="card_box-sing ${index === this.currentIndex ? "active" : ""} playlist__render" data-Index=${index}>
                 <img class="img_singgle"
                     src="${item.images[0].url}"
                     alt="">
@@ -121,9 +135,9 @@ const HomePageMusic = {
                 _this.playlistMusicHealth = data.playlists.items;
             })
             .catch(error => console.error("error", error))
-        const listMusicHealth = _this.playlistMusicHealth.map((item) => {
+        const listMusicHealth = _this.playlistMusicHealth.map((item, index) => {
             return `
-            <div class="card_box-sing playlist__render">
+            <div class="card_box-sing ${index === this.currentIndex ? "active" : ""} playlist__render" data-Index=${index}>
             <img class="img_singgle"
             src="${item.images[0].url}"
             alt="">
@@ -142,9 +156,9 @@ const HomePageMusic = {
                 _this.playlistAcoustic = data.playlists.items;
             })
             .catch(error => console.error("error", error))
-        const listMusicAcoustic = _this.playlistAcoustic.map((item) => {
+        const listMusicAcoustic = _this.playlistAcoustic.map((item, index) => {
             return `
-            <div class="card_box-sing playlist__render">
+            <div class="card_box-sing ${index === this.currentIndex ? "active" : ""} playlist__render" data-Index=${index}>
             <img class="img_singgle"
             src="${item.images[0].url}"
             alt="">
@@ -159,6 +173,16 @@ const HomePageMusic = {
     },
     handleEventSearch: function () {
         let _this = this;
+        // translateSearch
+        document.querySelector('.search').onclick = function () {
+            $('.search').style.color = "#fff";
+            iconHeadLeft.style.color = "#fff";
+            mainPage.style.color = "#9c9c9c";
+            $('.nav__search').style.display = "flex";
+            mainContent.style.display = "none";
+            $('.content_search').style.display = "block";
+            tracksInforSearch.style.display = "none";
+        }
         // return mainContent when search
         iconHeadLeft.onclick = function () {
             $('.search').style.color = "#b3b3b3";
@@ -179,20 +203,78 @@ const HomePageMusic = {
             mainContent.style.display = "block";
             // $('.head_search').style.display = "none";
             $('.content_search').style.display = "none";
+            mainInforList.style.display = "block";
+            mainInforPlaylist.style.display = "none";
         }
 
         // when enter search
         searchInput.onkeypress = function (e) {
             if (e.key === "Enter") {
-                console.log("hello key code 13")
-                // _this.handleSearch(e.target.value);
-                SearchMusic.handleSearch( e.target.value, _this.accessToken)
+                $('.head__search-title').style.display = "none";
+                $('.categories_search').style.display = "flex";
+                // SearchMusic.handleSearch( e.target.value, _this.accessToken, _this.type='all')
+                albumSearch.onclick = function () {
+                    _this.type = 'album';
+                    albumSearch.classList.add("active");
+                    singSearch.classList.remove("active");
+                    playlistSearch.classList.remove("active");
+                    tracksInforSearch.style.display = "none";
+                    albumsInforSearch.style.display = "grid";
+                    allInforSearch.style.display = "none";
+                    SearchMusic.handleSearch(e.target.value, _this.accessToken, _this.type = 'album')
+                }
+                playlistSearch.onclick = function () {
+                    _this.type = 'playlist';
+                    albumSearch.classList.remove("active");
+                    singSearch.classList.remove("active");
+                    playlistSearch.classList.add("active");
+                    tracksInforSearch.style.display = "none";
+                    albumsInforSearch.style.display = "none";
+                    allInforSearch.style.display = "none";
+                    SearchMusic.handleSearch(e.target.value, _this.accessToken, _this.type = 'playlist')
+                }
+                singSearch.onclick = function () {
+                    _this.type = 'sing';
+                    playlistSearch.classList.remove("active");
+                    albumSearch.classList.remove("active");
+                    singSearch.classList.add("active");
+                    tracksInforSearch.style.display = "block";
+                    albumsInforSearch.style.display = "none";
+                    allInforSearch.style.display = "none";
+                    SearchMusic.handleSearch(e.target.value, _this.accessToken, _this.type = 'sing')
+                }
+                allSearch.onclick = function () {
+                    _this.type = "all";
+                    playlistSearch.classList.remove("active");
+                    albumSearch.classList.remove("active");
+                    singSearch.classList.remove("active");
+                    tracksInforSearch.style.display = "none";
+                    albumsInforSearch.style.display = "none";
+                    allInforSearch.style.display = "block";
+                    SearchMusic.handleSearch(e.target.value, _this.accessToken, _this.type = "all")
+
+                }
+
+            }
+        }
+    },
+    handleEvent: function () {
+        let _this = this;
+        musicFor.onclick = function (e) {
+            const playlistIndex = e.target.closest('.card_box-sing');
+            if (playlistIndex) {
+                _this.currentIndex = Number(playlistIndex.getAttribute('data-Index'));
+                // TrackPlaylist.handleLog();
+                mainInforList.style.display = "none";
+                mainInforPlaylist.style.display = "block";
+
             }
         }
     },
     start: function () {
         this.handleEventSearch();
         this.handleRenderMusic();
+        this.handleEvent();
     }
 }
 HomePageMusic.start();
