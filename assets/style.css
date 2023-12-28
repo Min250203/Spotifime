@@ -162,10 +162,14 @@ html {
     border-radius: 15px;
 }
 
-.desc__contentmain {
+.desc__contentmain, .all__tracks-main {
     height: 90%;
     position: relative;
     padding: 0px 20px 20px;
+}
+
+.active-show{
+    display: none;
 }
 
 .nav__main-top {
@@ -219,7 +223,7 @@ html {
 }
 
 .children__content-playlist{
-    display: none;
+    /* display: none; */
     height: 100%;
     overflow-y: scroll;
 }
@@ -506,6 +510,7 @@ html {
 }
 
 .content__infor-albums,
+.list_albums-relate,
 .list__musicForU,
 .list__musicMood,
 .list__musicHealth,
@@ -819,4 +824,19 @@ html {
     font-weight: 600;
     border-radius: 15px;
     display: flex;
+}
+.title_sing-search{
+    display: none;
+    grid-template-columns: 80% 20%;
+
+}
+
+.tracks_album-search{
+    grid-template-columns: 80% 20%;
+
+}
+
+.head_title-relate{
+    font-size: 23px;
+    font-weight: 600;
 }

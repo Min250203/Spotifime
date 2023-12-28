@@ -7,7 +7,6 @@ const TrackPlaylist = {
     allTracks: [],
     handleRenderTracksForU: async function (prop) {
         let _this = this;
-        console.log(prop)
         let playlistID = prop.categoriesIDMusicForU;
         let playlisMusicForU = prop.playlisMusicForU;
         let categoriesParameters = prop.categoriesParameters;
@@ -20,7 +19,6 @@ const TrackPlaylist = {
             })
             .catch(error => console.error(error))
         const tracksPlaylist = _this.allTracksPlaylist.filter(item => item.name === titlePlaylist)
-        console.log(tracksPlaylist)
         //   inforHeader playlist
         const htmlsInforPlaylistHeader = `
             <div class="playlist__header">
@@ -89,7 +87,7 @@ const TrackPlaylist = {
             .catch(error => console.error("error", error))
 
         const tracksPlaylist = _this.allTracksPlaylist.filter(item => item.name === titlePlaylist)
-        const htmlsInforPlaylistHeader =`
+        const htmlsInforPlaylistHeader = `
             <div class="playlist__header">
                 <div class="playlist_img">
                     <img src="${tracksPlaylist[0].images[0].url}"
@@ -104,11 +102,11 @@ const TrackPlaylist = {
         headerInfor.innerHTML = htmlsInforPlaylistHeader;
 
         await fetch('https://api.spotify.com/v1/playlists/' + tracksPlaylist[0].id + '/tracks', categoriesParameters)
-        .then(response => response.json())
-        .then(data => {
-            return _this.allTracks = data.items
-        })
-        .catch(error => console.error("error", error))
+            .then(response => response.json())
+            .then(data => {
+                return _this.allTracks = data.items
+            })
+            .catch(error => console.error("error", error))
 
         const htmlsAllTracks = _this.allTracks.map((item, index) => {
             return `
@@ -156,7 +154,7 @@ const TrackPlaylist = {
             .catch(error => console.error("error", error))
 
         const tracksPlaylist = _this.allTracksPlaylist.filter(item => item.name === titlePlaylist)
-        const htmlsInforPlaylistHeader =`
+        const htmlsInforPlaylistHeader = `
             <div class="playlist__header">
                 <div class="playlist_img">
                     <img src="${tracksPlaylist[0].images[0].url}"
@@ -171,11 +169,11 @@ const TrackPlaylist = {
         headerInfor.innerHTML = htmlsInforPlaylistHeader;
 
         await fetch('https://api.spotify.com/v1/playlists/' + tracksPlaylist[0].id + '/tracks', categoriesParameters)
-        .then(response => response.json())
-        .then(data => {
-            return _this.allTracks = data.items
-        })
-        .catch(error => console.error("error", error))
+            .then(response => response.json())
+            .then(data => {
+                return _this.allTracks = data.items
+            })
+            .catch(error => console.error("error", error))
 
         const htmlsAllTracks = _this.allTracks.map((item, index) => {
             return `
@@ -223,7 +221,7 @@ const TrackPlaylist = {
             .catch(error => console.error("error", error))
 
         const tracksPlaylist = _this.allTracksPlaylist.filter(item => item.name === titlePlaylist)
-        const htmlsInforPlaylistHeader =`
+        const htmlsInforPlaylistHeader = `
             <div class="playlist__header">
                 <div class="playlist_img">
                     <img src="${tracksPlaylist[0].images[0].url}"
@@ -238,11 +236,11 @@ const TrackPlaylist = {
         headerInfor.innerHTML = htmlsInforPlaylistHeader;
 
         await fetch('https://api.spotify.com/v1/playlists/' + tracksPlaylist[0].id + '/tracks', categoriesParameters)
-        .then(response => response.json())
-        .then(data => {
-            return _this.allTracks = data.items
-        })
-        .catch(error => console.error("error", error))
+            .then(response => response.json())
+            .then(data => {
+                return _this.allTracks = data.items
+            })
+            .catch(error => console.error("error", error))
 
         const htmlsAllTracks = _this.allTracks.map((item, index) => {
             return `
@@ -274,7 +272,7 @@ const TrackPlaylist = {
         })
         allTracksPlaylist.innerHTML = htmlsAllTracks.join('');
 
-    }     
+    }
 };
 
-                export default TrackPlaylist;
+export default TrackPlaylist;

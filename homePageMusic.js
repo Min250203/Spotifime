@@ -10,21 +10,21 @@ const musicHealth = $('.list__musicHealth');
 const musicAcoustic = $('.list__musicAcoustic');
 const musicTrack = $('.playlistTracks');
 const mainContent = $('.desc__contentmain');
+const allTracks = $('.active-show');
 const iconHeadLeft = $('.left');
 const mainPage = $('.home');
-const mainInforList = $('.children__content');
-const mainInforPlaylist = $('.children__content-playlist');
+// const mainInforList = $('.children__content');
+const mainInforTracks = $('.all__tracks-main');
 const albumSearch = $('.album_search');
 const playlistSearch = $('.playlist_search');
 const singSearch = $('.sing_search');
 const allSearch = $('.all_search');
 const tracksInforSearch = $('.content__infor-tracks');
 const albumsInforSearch = $('.content__infor-albums');
-const allInforSearch = $('.content__infor-all')
-
-
-
-
+const albumRelateWrap = $('.album_relate-wrap');
+const albumSearchWrap = $('.album_search-wrap')
+const allInforSearch = $('.content__infor-all');
+const albumRelateSearch = $('.relate_albums-search');
 
 const HomePageMusic = {
     contentSearch: '',
@@ -61,7 +61,7 @@ const HomePageMusic = {
             })
             .catch(error => console.error(error));
         // render type
-         _this.categoriesParameters = {
+        _this.categoriesParameters = {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -166,6 +166,7 @@ const HomePageMusic = {
         let _this = this;
         // translateSearch
         document.querySelector('.search').onclick = function () {
+            mainInforTracks.style.display = "none";
             $('.search').style.color = "#fff";
             iconHeadLeft.style.color = "#fff";
             mainPage.style.color = "#9c9c9c";
@@ -181,12 +182,14 @@ const HomePageMusic = {
             iconHeadLeft.style.color = "#9c9c9c";
             $('.nav__search').style.display = "none";
             mainContent.style.display = "block";
-            $('.head_search').style.display = "none";
             $('.content_search').style.display = "none";
+            mainInforTracks.style.display = "none";
+
         }
 
         // when click homeMain
         mainPage.onclick = function () {
+            console.log("đổi chỗ này nè")
             $('.search').style.color = "#b3b3b3";
             $('.home').style.color = "#fff";
             iconHeadLeft.style.color = "#9c9c9c";
@@ -194,25 +197,42 @@ const HomePageMusic = {
             mainContent.style.display = "block";
             // $('.head_search').style.display = "none";
             $('.content_search').style.display = "none";
-            mainInforList.style.display = "block";
-            mainInforPlaylist.style.display = "none";
+            // mainInforList.style.display = "block";
+            mainInforTracks.style.display = "none";
         }
 
         // when enter search
         searchInput.onkeypress = function (e) {
             if (e.key === "Enter") {
+                // icon left
+                iconHeadLeft.onclick = function () {
+                    $('.search').style.color = "#b3b3b3";
+                    $('.home').style.color = "#fff";
+                    iconHeadLeft.style.color = "#9c9c9c";
+                    $('.nav__search').style.display = "none";
+                    mainContent.style.display = "block";
+                    $('.content_search').style.display = "none";
+                    mainInforTracks.style.display = "none";
+        
+                }
+        
                 $('.head__search-title').style.display = "none";
                 $('.categories_search').style.display = "flex";
                 // render all when enter search
-                _this.type = "all";
                 playlistSearch.classList.remove("active");
                 albumSearch.classList.remove("active");
                 singSearch.classList.remove("active");
                 allSearch.classList.add("active");
                 tracksInforSearch.style.display = "none";
-                albumsInforSearch.style.display = "none";
+                // albumsInforSearch.style.display = "none";
+                // albumsInforSearch.style.display = "none";
+                // albumRelateWrap.style.display = "grid";
+                albumSearchWrap.style.display = "none";
                 allInforSearch.style.display = "block";
-                SearchMusic.handleSearch(e.target.value, _this.accessToken, _this.type = "all")
+                let valueInput = e.target.value;
+                let accessToken = _this.accessToken;
+                let type = 'all';
+                SearchMusic.start({ valueInput, accessToken, type })
 
                 // when click allsearch
                 allSearch.onclick = function () {
@@ -223,44 +243,111 @@ const HomePageMusic = {
                     singSearch.classList.remove("active");
                     allSearch.classList.add("active");
                     tracksInforSearch.style.display = "none";
-                    albumsInforSearch.style.display = "none";
+                    albumSearchWrap.style.display = "none";
+                    albumRelateWrap.style.display = "grid";
+
+                    // albumsInforSearch.style.display = "none";
                     allInforSearch.style.display = "block";
-                    SearchMusic.handleSearch(e.target.value, _this.accessToken, _this.type = "all")
+                    let valueInput = e.target.value;
+                    let accessToken = _this.accessToken;
+                    let type = 'all';
+                    SearchMusic.start({ valueInput, accessToken, type })
+
+                    // icon left
+                    iconHeadLeft.onclick = function () {
+                        $('.search').style.color = "#b3b3b3";
+                        $('.home').style.color = "#fff";
+                        iconHeadLeft.style.color = "#9c9c9c";
+                        $('.nav__search').style.display = "none";
+                        mainContent.style.display = "block";
+                        $('.content_search').style.display = "none";
+                        mainInforTracks.style.display = "none";
+            
+                    }
 
                 }
-                // SearchMusic.handleSearch( e.target.value, _this.accessToken, _this.type='all')
+                // SearchMusic.start( ='all')
                 albumSearch.onclick = function () {
                     _this.type = 'album';
                     albumSearch.classList.add("active");
                     singSearch.classList.remove("active");
                     playlistSearch.classList.remove("active");
                     tracksInforSearch.style.display = "none";
-                    albumsInforSearch.style.display = "grid";
+                    // albumsInforSearch.style.display = "grid";
+                    albumSearchWrap.style.display = "grid";
+
                     allSearch.classList.remove("active");
                     allInforSearch.style.display = "none";
-                    SearchMusic.handleSearch(e.target.value, _this.accessToken, _this.type = 'album')
+                    let valueInput = e.target.value;
+                    let accessToken = _this.accessToken;
+                    let type = 'album';
+                    SearchMusic.start({ valueInput, accessToken, type })
+
+                    // icon left
+                    iconHeadLeft.onclick = function () {
+                        $('.search').style.color = "#b3b3b3";
+                        $('.home').style.color = "#fff";
+                        iconHeadLeft.style.color = "#9c9c9c";
+                        $('.nav__search').style.display = "none";
+                        mainContent.style.display = "block";
+                        $('.content_search').style.display = "none";
+                        mainInforTracks.style.display = "none";
+            
+                    }
                 }
                 playlistSearch.onclick = function () {
-                    _this.type = 'playlist';
                     albumSearch.classList.remove("active");
                     singSearch.classList.remove("active");
                     allSearch.classList.remove("active");
                     playlistSearch.classList.add("active");
                     tracksInforSearch.style.display = "none";
                     albumsInforSearch.style.display = "none";
+                    albumSearchWrap.style.display = "none";
+                    albumRelateWrap.style.display = "none";
                     allInforSearch.style.display = "none";
-                    SearchMusic.handleSearch(e.target.value, _this.accessToken, _this.type = 'playlist')
+                    let valueInput = e.target.value;
+                    let accessToken = _this.accessToken;
+                    let type = 'playlist';
+                    SearchMusic.start({ valueInput, accessToken, type })
+
+                    // icon left
+                    iconHeadLeft.onclick = function () {
+                        $('.search').style.color = "#b3b3b3";
+                        $('.home').style.color = "#fff";
+                        iconHeadLeft.style.color = "#9c9c9c";
+                        $('.nav__search').style.display = "none";
+                        mainContent.style.display = "block";
+                        $('.content_search').style.display = "none";
+                        mainInforTracks.style.display = "none";
+            
+                    }
                 }
                 singSearch.onclick = function () {
-                    _this.type = 'sing';
                     playlistSearch.classList.remove("active");
                     albumSearch.classList.remove("active");
                     singSearch.classList.add("active");
                     tracksInforSearch.style.display = "block";
                     allSearch.classList.remove("active");
                     albumsInforSearch.style.display = "none";
+                    albumSearchWrap.style.display = "none";
+                    // albumRelateWrap.style.display = "none";
                     allInforSearch.style.display = "none";
-                    SearchMusic.handleSearch(e.target.value, _this.accessToken, _this.type = 'sing')
+                    let valueInput = e.target.value;
+                    let accessToken = _this.accessToken;
+                    let type = 'sing';
+                    SearchMusic.start({ valueInput, accessToken, type })
+
+                    // icon left
+                    iconHeadLeft.onclick = function () {
+                        $('.search').style.color = "#b3b3b3";
+                        $('.home').style.color = "#fff";
+                        iconHeadLeft.style.color = "#9c9c9c";
+                        $('.nav__search').style.display = "none";
+                        mainContent.style.display = "block";
+                        $('.content_search').style.display = "none";
+                        mainInforTracks.style.display = "none";
+            
+                    }
                 }
 
 
@@ -272,68 +359,72 @@ const HomePageMusic = {
         let _this = this;
         // click playlist to return tracks music for u
         musicFor.onclick = function (e) {
-            const playlistIndex = e.target.closest('.card_box-sing');
+            const playlistIndex = e.target.closest('.playlist__render');
             if (playlistIndex) {
                 let titlePlaylist = playlistIndex.querySelector('.title_singgle').innerText;
                 _this.currentIndex = Number(playlistIndex.getAttribute('data-Index'));
-                console.log(_this.currentIndex)
                 let playlistMusicForU = _this.playlistMusicForU;
                 let categoriesIDMusicForU = _this.categoriesIDMusicForU;
                 let categoriesParameters = _this.categoriesParameters;
-                TrackPlaylist.handleRenderTracksForU({ playlistMusicForU, categoriesIDMusicForU,categoriesParameters, titlePlaylist});
-                mainInforList.style.display = "none";
-                mainInforPlaylist.style.display = "block";
+                TrackPlaylist.handleRenderTracksForU({ playlistMusicForU, categoriesIDMusicForU, categoriesParameters, titlePlaylist });
+                mainContent.style.display = "none";
+                allTracks.style.display = "block";
+                albumRelateSearch.style.display = "none";
+                mainInforTracks.style.display = "block";
 
             }
         };
 
         // click playlist to return tracks music mood
         musicMood.onclick = function (e) {
-            const playlistIndex = e.target.closest('.card_box-sing');
+            const playlistIndex = e.target.closest('.playlist__render');
             if (playlistIndex) {
                 let titlePlaylist = playlistIndex.querySelector('.title_singgle').innerText;
                 _this.currentIndex = Number(playlistIndex.getAttribute('data-Index'));
-                console.log(_this.currentIndex)
                 let playlistMusicMood = _this.playlistMusicMood;
                 let categoriesIDMood = _this.categoriesIDMood;
                 let categoriesParameters = _this.categoriesParameters;
-                TrackPlaylist.handleRenderTracksMood({ playlistMusicMood, categoriesIDMood,categoriesParameters, titlePlaylist});
-                mainInforList.style.display = "none";
-                mainInforPlaylist.style.display = "block";
+                TrackPlaylist.handleRenderTracksMood({ playlistMusicMood, categoriesIDMood, categoriesParameters, titlePlaylist });
+                mainContent.style.display = "none";
+                allTracks.style.display = "block";
+                albumRelateSearch.style.display = "none";
+                mainInforTracks.style.display = "block";
 
             }
         };
 
-         // click playlist to return tracks music health
-         musicHealth.onclick = function (e) {
-            const playlistIndex = e.target.closest('.card_box-sing');
+        // click playlist to return tracks music health
+        musicHealth.onclick = function (e) {
+            const playlistIndex = e.target.closest('.playlist__render');
             if (playlistIndex) {
                 let titlePlaylist = playlistIndex.querySelector('.title_singgle').innerText;
                 _this.currentIndex = Number(playlistIndex.getAttribute('data-Index'));
-                console.log(_this.currentIndex)
                 let playlistMusicHealth = _this.playlistMusicHealth;
                 let categoriesIDHealth = _this.categoriesIDHealth;
                 let categoriesParameters = _this.categoriesParameters;
-                TrackPlaylist.handleRenderTracksHealth({ playlistMusicHealth, categoriesIDHealth,categoriesParameters, titlePlaylist});
-                mainInforList.style.display = "none";
-                mainInforPlaylist.style.display = "block";
+                TrackPlaylist.handleRenderTracksHealth({ playlistMusicHealth, categoriesIDHealth, categoriesParameters, titlePlaylist });
+                mainContent.style.display = "none";
+                allTracks.style.display = "block";
+                albumRelateSearch.style.display = "none";
+                mainInforTracks.style.display = "block";
 
             }
         };
 
-         // click playlist to return tracks music accoustic
-         musicAcoustic.onclick = function (e) {
-            const playlistIndex = e.target.closest('.card_box-sing');
+        // click playlist to return tracks music accoustic
+        musicAcoustic.onclick = function (e) {
+            const playlistIndex = e.target.closest('.playlist__render');
             if (playlistIndex) {
                 let titlePlaylist = playlistIndex.querySelector('.title_singgle').innerText;
                 _this.currentIndex = Number(playlistIndex.getAttribute('data-Index'));
-                console.log(_this.currentIndex)
                 let playlistMusicAcoustic = _this.playlistMusicAcoustic;
                 let categoriesIDAcoustic = _this.categoriesIDAcoustic;
                 let categoriesParameters = _this.categoriesParameters;
-                TrackPlaylist.handleRenderTracksAccoustic({ playlistMusicAcoustic, categoriesIDAcoustic,categoriesParameters, titlePlaylist});
-                mainInforList.style.display = "none";
-                mainInforPlaylist.style.display = "block";
+                TrackPlaylist.handleRenderTracksAccoustic({ playlistMusicAcoustic, categoriesIDAcoustic, categoriesParameters, titlePlaylist });
+                mainContent.style.display = "none";
+                allTracks.style.display = "block";
+                albumRelateSearch.style.display = "none";
+                mainInforTracks.style.display = "block";
 
             }
         };
