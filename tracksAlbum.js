@@ -15,6 +15,7 @@ const TracksAlbum = {
     type: '',
     handleRenderTracks: async function (props) {
         let _this = this;
+        console.log(props)
         let indexAlbum = props.indexAlbum;
         let dataAlbum = props.dataAlbum;
         let artistParameters = props.artistParameters;

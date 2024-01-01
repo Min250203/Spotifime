@@ -30,7 +30,8 @@ const SearchMusic = {
     type: '',
     handleSearch: async function (props) {
         let _this = this;
-        if (props.type) {
+        if (props) {
+            console.log(props)
             let valueInput = props.valueInput
             let accessToken = props.accessToken
             this.type = props.type
@@ -57,8 +58,6 @@ const SearchMusic = {
                     .then(response => response.json())
                     .then(data => {
                         _this.albums = data.items;
-                        _this.relateAlbum = true;
-
                     })
                     .catch(error => console.error('Error:', error))
                 const htmlsAlbumSearch = _this.albums.map((album, index) => {
@@ -209,7 +208,9 @@ const SearchMusic = {
                 albumsInforSearch.forEach(element => { element.innerHTML = htmlsAlbumSearch.join("") })
 
             }
-        } else {
+        }
+         else {
+            console.log("đây là đâu")
             const htmlsAlbumSearch = _this.albums.slice(0, 6).map((album, index) => {
                 let yearAlbum = album.release_date.split("-", 1);
                 return `
@@ -230,6 +231,7 @@ const SearchMusic = {
     },
     handleRelateAlubms: function (prop) {
         if (prop === true) {
+            console.log("ra chỗ này hả ta")
             this.handleSearch()
         }
     },
@@ -258,7 +260,7 @@ const SearchMusic = {
                     let indexAlbum = _this.currentIndex = Number(albumIndex.getAttribute('data-Index'));
                     let dataAlbum = _this.albums;
                     let artistParameters = _this.artistParameters;
-                    let relateAlbum = _this.relateAlbum;
+                    let relateAlbum = true;
                     allTracks.style.display = "block";
                     // albumRelateSearch.style.display = "none";
                     // $('.title_sing-wrap').style.display = "none";

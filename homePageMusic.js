@@ -189,7 +189,6 @@ const HomePageMusic = {
 
         // when click homeMain
         mainPage.onclick = function () {
-            console.log("đổi chỗ này nè")
             $('.search').style.color = "#b3b3b3";
             $('.home').style.color = "#fff";
             iconHeadLeft.style.color = "#9c9c9c";
@@ -213,9 +212,9 @@ const HomePageMusic = {
                     mainContent.style.display = "block";
                     $('.content_search').style.display = "none";
                     mainInforTracks.style.display = "none";
-        
+
                 }
-        
+
                 $('.head__search-title').style.display = "none";
                 $('.categories_search').style.display = "flex";
                 // render all when enter search
@@ -236,7 +235,6 @@ const HomePageMusic = {
 
                 // when click allsearch
                 allSearch.onclick = function () {
-                    console.log("đây là search")
                     _this.type = "all";
                     playlistSearch.classList.remove("active");
                     albumSearch.classList.remove("active");
@@ -262,7 +260,7 @@ const HomePageMusic = {
                         mainContent.style.display = "block";
                         $('.content_search').style.display = "none";
                         mainInforTracks.style.display = "none";
-            
+
                     }
 
                 }
@@ -275,7 +273,6 @@ const HomePageMusic = {
                     tracksInforSearch.style.display = "none";
                     // albumsInforSearch.style.display = "grid";
                     albumSearchWrap.style.display = "grid";
-
                     allSearch.classList.remove("active");
                     allInforSearch.style.display = "none";
                     let valueInput = e.target.value;
@@ -292,7 +289,7 @@ const HomePageMusic = {
                         mainContent.style.display = "block";
                         $('.content_search').style.display = "none";
                         mainInforTracks.style.display = "none";
-            
+
                     }
                 }
                 playlistSearch.onclick = function () {
@@ -319,7 +316,7 @@ const HomePageMusic = {
                         mainContent.style.display = "block";
                         $('.content_search').style.display = "none";
                         mainInforTracks.style.display = "none";
-            
+
                     }
                 }
                 singSearch.onclick = function () {
@@ -346,13 +343,158 @@ const HomePageMusic = {
                         mainContent.style.display = "block";
                         $('.content_search').style.display = "none";
                         mainInforTracks.style.display = "none";
-            
+
                     }
                 }
+            }
+        }
 
+        // when field text
+        searchInput.oninput = function (e) {
+            // icon left
+            iconHeadLeft.onclick = function () {
+                $('.search').style.color = "#b3b3b3";
+                $('.home').style.color = "#fff";
+                iconHeadLeft.style.color = "#9c9c9c";
+                $('.nav__search').style.display = "none";
+                mainContent.style.display = "block";
+                $('.content_search').style.display = "none";
+                mainInforTracks.style.display = "none";
+            }
 
+            $('.head__search-title').style.display = "none";
+            $('.categories_search').style.display = "flex";
+            // render all when enter search
+            playlistSearch.classList.remove("active");
+            albumSearch.classList.remove("active");
+            singSearch.classList.remove("active");
+            allSearch.classList.add("active");
+            tracksInforSearch.style.display = "none";
+            // albumsInforSearch.style.display = "none";
+            // albumsInforSearch.style.display = "none";
+            // albumRelateWrap.style.display = "grid";
+            albumSearchWrap.style.display = "none";
+            allInforSearch.style.display = "block";
+            let valueInput = e.target.value;
+            let accessToken = _this.accessToken;
+            let type = 'all';
+            SearchMusic.start({ valueInput, accessToken, type })
+
+            // when click allsearch
+            allSearch.onclick = function () {
+                _this.type = "all";
+                playlistSearch.classList.remove("active");
+                albumSearch.classList.remove("active");
+                singSearch.classList.remove("active");
+                allSearch.classList.add("active");
+                tracksInforSearch.style.display = "none";
+                albumSearchWrap.style.display = "none";
+                albumRelateWrap.style.display = "grid";
+
+                // albumsInforSearch.style.display = "none";
+                allInforSearch.style.display = "block";
+                let valueInput = e.target.value;
+                let accessToken = _this.accessToken;
+                let type = 'all';
+                SearchMusic.start({ valueInput, accessToken, type })
+
+                // icon left
+                iconHeadLeft.onclick = function () {
+                    $('.search').style.color = "#b3b3b3";
+                    $('.home').style.color = "#fff";
+                    iconHeadLeft.style.color = "#9c9c9c";
+                    $('.nav__search').style.display = "none";
+                    mainContent.style.display = "block";
+                    $('.content_search').style.display = "none";
+                    mainInforTracks.style.display = "none";
+
+                }
 
             }
+            // SearchMusic.start( ='all')
+            albumSearch.onclick = function () {
+                _this.type = 'album';
+                albumSearch.classList.add("active");
+                singSearch.classList.remove("active");
+                playlistSearch.classList.remove("active");
+                tracksInforSearch.style.display = "none";
+                // albumsInforSearch.style.display = "grid";
+                albumSearchWrap.style.display = "grid";
+                allSearch.classList.remove("active");
+                allInforSearch.style.display = "none";
+                let valueInput = e.target.value;
+                let accessToken = _this.accessToken;
+                let type = 'album';
+                SearchMusic.start({ valueInput, accessToken, type })
+
+                // icon left
+                iconHeadLeft.onclick = function () {
+                    $('.search').style.color = "#b3b3b3";
+                    $('.home').style.color = "#fff";
+                    iconHeadLeft.style.color = "#9c9c9c";
+                    $('.nav__search').style.display = "none";
+                    mainContent.style.display = "block";
+                    $('.content_search').style.display = "none";
+                    mainInforTracks.style.display = "none";
+
+                }
+            }
+            playlistSearch.onclick = function () {
+                albumSearch.classList.remove("active");
+                singSearch.classList.remove("active");
+                allSearch.classList.remove("active");
+                playlistSearch.classList.add("active");
+                tracksInforSearch.style.display = "none";
+                albumsInforSearch.style.display = "none";
+                albumSearchWrap.style.display = "none";
+                albumRelateWrap.style.display = "none";
+                allInforSearch.style.display = "none";
+                let valueInput = e.target.value;
+                let accessToken = _this.accessToken;
+                let type = 'playlist';
+                SearchMusic.start({ valueInput, accessToken, type })
+
+                // icon left
+                iconHeadLeft.onclick = function () {
+                    $('.search').style.color = "#b3b3b3";
+                    $('.home').style.color = "#fff";
+                    iconHeadLeft.style.color = "#9c9c9c";
+                    $('.nav__search').style.display = "none";
+                    mainContent.style.display = "block";
+                    $('.content_search').style.display = "none";
+                    mainInforTracks.style.display = "none";
+
+                }
+            }
+            singSearch.onclick = function () {
+                playlistSearch.classList.remove("active");
+                albumSearch.classList.remove("active");
+                singSearch.classList.add("active");
+                tracksInforSearch.style.display = "block";
+                allSearch.classList.remove("active");
+                albumsInforSearch.style.display = "none";
+                albumSearchWrap.style.display = "none";
+                // albumRelateWrap.style.display = "none";
+                allInforSearch.style.display = "none";
+                let valueInput = e.target.value;
+                let accessToken = _this.accessToken;
+                let type = 'sing';
+                SearchMusic.start({ valueInput, accessToken, type })
+
+                // icon left
+                iconHeadLeft.onclick = function () {
+                    $('.search').style.color = "#b3b3b3";
+                    $('.home').style.color = "#fff";
+                    iconHeadLeft.style.color = "#9c9c9c";
+                    $('.nav__search').style.display = "none";
+                    mainContent.style.display = "block";
+                    $('.content_search').style.display = "none";
+                    mainInforTracks.style.display = "none";
+
+                }
+            }
+
+
         }
     },
     handleEventTracks: function () {
