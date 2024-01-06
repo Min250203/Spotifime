@@ -513,7 +513,7 @@ const HomePageMusic = {
                 allTracks.style.display = "block";
                 albumRelateSearch.style.display = "none";
                 mainInforTracks.style.display = "block";
-
+                $('.list_Tracks-single').style.display = "none";
             }
         };
 
@@ -531,7 +531,7 @@ const HomePageMusic = {
                 allTracks.style.display = "block";
                 albumRelateSearch.style.display = "none";
                 mainInforTracks.style.display = "block";
-
+                $('.list_Tracks-single').style.display = "none";
             }
         };
 
@@ -549,7 +549,7 @@ const HomePageMusic = {
                 allTracks.style.display = "block";
                 albumRelateSearch.style.display = "none";
                 mainInforTracks.style.display = "block";
-
+                $('.list_Tracks-single').style.display = "none";
             }
         };
 
@@ -567,7 +567,7 @@ const HomePageMusic = {
                 allTracks.style.display = "block";
                 albumRelateSearch.style.display = "none";
                 mainInforTracks.style.display = "block";
-
+                $('.list_Tracks-single').style.display = "none";
             }
         };
 

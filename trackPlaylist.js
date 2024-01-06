@@ -65,8 +65,10 @@ const TrackPlaylist = {
                     <div class="time-added">1 tuần trước</div>
                 </div>
                 <div class="list_clock">
-                    <div class="time-clock">2 phút</div>
-                </div>
+                        <i class="fa-regular fa-heart"></i>
+                        <div class="time-clock">2 phút</div>
+                        <i class="fa-solid fa-ellipsis"></i>
+                    </div>
             </div>
             `
         })

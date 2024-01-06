@@ -1,5 +1,6 @@
 
 import TracksAlbum from "./tracksAlbum.js";
+import TopTracksSingle from "./topTracksSingle.js";
 
 const albumsInforSearch = $$('.content__infor-albums');
 const tracksInforSearch = $('.tracks-search');
@@ -31,7 +32,6 @@ const SearchMusic = {
     handleSearch: async function (props) {
         let _this = this;
         if (props) {
-            console.log(props)
             let valueInput = props.valueInput
             let accessToken = props.accessToken
             this.type = props.type
@@ -135,6 +135,8 @@ const SearchMusic = {
                  </div>
                 `
                 singleWrapSearch.innerHTML = htmlsInforSinglelSearch;
+                // when click infor single
+                _this.handleEventTopTracks();
 
                 // top tracks when search single
                 const htmlsTracksInforAllSearch = _this.tracksInforAllSearch.slice(5, 9).map((item) => {
@@ -209,8 +211,7 @@ const SearchMusic = {
 
             }
         }
-         else {
-            console.log("đây là đâu")
+        else {
             const htmlsAlbumSearch = _this.albums.slice(0, 6).map((album, index) => {
                 let yearAlbum = album.release_date.split("-", 1);
                 return `
@@ -231,7 +232,6 @@ const SearchMusic = {
     },
     handleRelateAlubms: function (prop) {
         if (prop === true) {
-            console.log("ra chỗ này hả ta")
             this.handleSearch()
         }
     },
@@ -248,28 +248,51 @@ const SearchMusic = {
                     iconHeadLeft.onclick = function () {
                         $('.search').style.color = "#fff";
                         iconHeadLeft.style.color = "#fff";
-                        // $('.nav__search').style.display = "none";
-                        // mainContent.style.display = "block";
-                        // $('.content_search').style.display = "none";
                         contentSearch.style.display = "block";
                         allTracks.style.display = "none";
-                        // _this.handleSearch()
-
-
                     }
                     let indexAlbum = _this.currentIndex = Number(albumIndex.getAttribute('data-Index'));
                     let dataAlbum = _this.albums;
                     let artistParameters = _this.artistParameters;
                     let relateAlbum = true;
                     allTracks.style.display = "block";
-                    // albumRelateSearch.style.display = "none";
-                    // $('.title_sing-wrap').style.display = "none";
-                    // $('.title_sing-search').style.display = "grid";
                     contentSearch.style.display = "none";
+                    $('.list__Playlist').style.display = "block";
+                    $('.list_Tracks-single').style.display = "none";
+                    $('.title_sing-wrap').style.display = 'none';
+                    $('.title_sing-search').style.display = 'grid'
                     TracksAlbum.handleRenderTracks({ indexAlbum, dataAlbum, artistParameters, relateAlbum })
                 }
             }
         })
+
+    },
+    handleEventTopTracks: function () {
+        let _this = this;
+        singleWrapSearch.onclick = function (e) {
+            const tracksSingle = e.target.closest('.single-wrap');
+            if (tracksSingle) {
+                $('.search').style.color = "#fff";
+                iconHeadLeft.style.color = "#fff";
+                // icon left
+                iconHeadLeft.onclick = function () {
+                    $('.search').style.color = "#fff";
+                    iconHeadLeft.style.color = "#fff";
+                    contentSearch.style.display = "block";
+                    allTracks.style.display = "none";
+                }
+                let artistID = _this.artistID;
+                let artistParameters = _this.artistParameters;
+                contentSearch.style.display = "none";
+                allTracks.style.display = "block";
+                $('.nav__search').style.display = "none";
+
+                $('.list__Playlist').style.display = "none";
+                $('.list_Tracks-single').style.display = "flex";
+                TopTracksSingle.handleTracks({ artistID, artistParameters })
+            }
+
+        }
 
     },
     start: async function (props) {
