@@ -14,6 +14,17 @@ html {
     font-family: sans-serif;
 }
 
+::-webkit-scrollbar {
+    height: 8px;
+    overflow: visible;
+    width: 8px;
+    background: #121212;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+    background: #5a5a5a;
+}
+
 #container {
     width: 100%;
     height: 100vh;
@@ -39,7 +50,7 @@ html {
 }
 
 .container__slide-leftbar {
-    width: 19%;
+    width: 25%;
     /* padding: 10px 10px 0 10px; */
     padding-top: 10px;
     color: #b3b3b3;
@@ -149,7 +160,7 @@ html {
 }
 
 .container__maincontent {
-    width: 80%;
+    width: 74%;
     padding-top: 10px;
     position: relative;
     height: 100%;
@@ -166,7 +177,7 @@ html {
 .all__tracks-main {
     height: 90%;
     position: relative;
-    padding: 0px 20px 20px;
+    padding: 0px 20px 5px 30px;
 }
 
 .active-show {
@@ -221,12 +232,15 @@ html {
 .children__content {
     height: 100%;
     overflow-y: scroll;
+    overflow-x: hidden;
+    margin-right: -20px;
 }
 
 .children__content-playlist {
     /* display: none; */
     height: 100%;
     overflow-y: scroll;
+    margin-right: -20px
 }
 
 .library__parent {
@@ -236,6 +250,7 @@ html {
 .search__inlibrary {
     height: 80%;
     overflow-y: scroll;
+    margin-right: -20px;
 
 }
 
@@ -455,7 +470,7 @@ html {
 
 .content_search {
     display: none;
-    padding: 10px 20px;
+    padding: 10px 20px 10px 30px;
     justify-content: center;
     overflow-y: scroll;
     height: 90%;
@@ -517,8 +532,8 @@ html {
 .list__musicHealth,
 .list__musicAcoustic {
     display: grid;
-    grid-template-columns: repeat(6, 176px);
-    gap: 21px;
+    grid-template-columns: repeat(5, 196px);
+    gap: 25px;
     /* border-radius: 15px; */
 }
 
@@ -534,8 +549,8 @@ html {
 .album_box-wrap,
 .playlist_box-wrap {
     display: grid;
-    grid-template-columns: repeat(12, 176px);
-    gap: 21px;
+    grid-template-columns: repeat(5, 196px);
+    gap: 25px;
 }
 
 .title_singgle {
@@ -570,7 +585,8 @@ html {
 .playlist_img {
     width: 270px;
     height: 275px;
-    padding: 25px;
+    padding: 22px;
+    margin-left: -22px;
 }
 
 .playlist__title-header {
@@ -585,6 +601,7 @@ html {
 }
 
 .action-right {
+    margin-right: 20px;
     display: flex;
     gap: 10px;
     align-items: center;
@@ -644,7 +661,8 @@ html {
 }
 
 .playlist-wrap {
-    margin: 30px;
+    margin-top: 25px;
+    padding: 12px;
 }
 
 .content-wrap {
@@ -664,7 +682,7 @@ html {
 .title_sing-wrap,
 .content__sing-wrap {
     display: grid;
-    grid-template-columns: 40% 25% 25% 10%;
+    grid-template-columns: 40% 25% 20% 15%;
 }
 
 .title_sing-wrap-search,
@@ -801,8 +819,9 @@ html {
 }
 
 .sing_wrap {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 65% 35%;
+    gap: 20px;
     padding: 7px;
 }
 
@@ -854,13 +873,50 @@ html {
 
 }
 
-.head_title-relate, .head_title-like {
+.head_title-relate,
+.head_title-like {
     font-size: 23px;
     font-weight: 600;
 }
 
-.list_Tracks-single{
+.list_Tracks-single {
     display: none;
     flex-direction: column;
     gap: 30px;
+}
+
+/* mobile */
+@media only screen  and (max-width: 46.1875em){
+    
+}
+
+/* tablet */
+@media only screen and (min-width: 46.25em) and (max-width: 63.9375em){
+
+    .container__slide-leftbar{
+        display: none;
+    }
+
+    .container__maincontent{
+        width: 100%;
+    }
+
+    .content__infor-albums, .list_albums-relate, .list__musicForU, .list__musicMood, .list__musicHealth, .list__musicAcoustic{
+        grid-template-columns: repeat(4, 176px);
+
+    }
+
+    .box_relate-wrap, .artist_box-wrap, .album_fan-wrap, .album_box-wrap, .playlist_box-wrap{
+        grid-template-columns: repeat(4, 176px);
+
+    }
+
+    .nav__search{
+        display: flex;
+    }
+}
+
+/* pc */
+@media only screen and (min-width: 64em){
+    
 }

@@ -29,6 +29,7 @@ const SearchMusic = {
     artistParameters: {},
     relateAlbum: false,
     type: '',
+    itemSingle: {},
     handleSearch: async function (props) {
         let _this = this;
         if (props) {
@@ -122,15 +123,15 @@ const SearchMusic = {
                     .catch(error => console.error(error))
 
                 // inforSingle when search
-                let itemSingle = _this.tracksInforAllSearch[0];
+                _this.itemSingle = _this.tracksInforAllSearch[0];
                 const htmlsInforSinglelSearch =
                     `
                 <div class="single-wrap">
                     <div class="img_single-search">
-                        <img src="${itemSingle.album.images[0].url}"
+                        <img src="${_this.itemSingle.album.images[0].url}"
                         alt="">
                     </div>
-                    <p class="single-search">${itemSingle.artists[0].name}</p>
+                    <p class="single-search">${_this.itemSingle.artists[0].name}</p>
                     <p class="artist-search">Nghệ sĩ</p>
                  </div>
                 `
@@ -169,7 +170,7 @@ const SearchMusic = {
                     })
                     .catch(error => console.error("error", error))
 
-                const htmlArtistRelate = _this.artistRelate.slice(10, 15).map((item, index) => {
+                const htmlArtistRelate = _this.artistRelate.slice(10, 14).map((item, index) => {
                     return `
                 <div class="card_box-sing playlist__search">
                     <img class="img_singgle" src="${item.images[0].url}" alt="">
@@ -180,19 +181,20 @@ const SearchMusic = {
 
                 const htmlArtistSearch = `
             <div class="card_box-sing playlist__search">
-            <img class="img_singgle" src="${itemSingle.album.images[0].url}" alt="">
-                <p class="title_singgle">${itemSingle.artists[0].name}</p>
+            <img class="img_singgle" src="${_this.itemSingle.album.images[0].url}" alt="">
+                <p class="title_singgle">${_this.itemSingle.artists[0].name}</p>
               </div>
             `
                 artistRelateWrap.innerHTML = htmlArtistSearch + htmlArtistRelate.join("");
 
                 // infor album when search all
-                await fetch('https://api.spotify.com/v1/artists/' + _this.artistID + '/albums' + '?market=VN&limit=6', _this.artistParameters)
+                await fetch('https://api.spotify.com/v1/artists/' + _this.artistID + '/albums' + '?market=VN&limit=5', _this.artistParameters)
                     .then(response => response.json())
                     .then(data => {
                         return _this.albums = data.items;
                     })
                     .catch(error => console.error('Error:', error))
+                console.log(_this.albums)
                 const htmlsAlbumSearch = _this.albums.map((album, index) => {
                     let yearAlbum = album.release_date.split("-", 1);
                     return `
@@ -212,7 +214,7 @@ const SearchMusic = {
             }
         }
         else {
-            const htmlsAlbumSearch = _this.albums.slice(0, 6).map((album, index) => {
+            const htmlsAlbumSearch = _this.albums.slice(0, 5).map((album, index) => {
                 let yearAlbum = album.release_date.split("-", 1);
                 return `
             <div class="card_box-sing playlist__search" data-Index=${index}>
@@ -269,6 +271,7 @@ const SearchMusic = {
     },
     handleEventTopTracks: function () {
         let _this = this;
+        // infor single track
         singleWrapSearch.onclick = function (e) {
             const tracksSingle = e.target.closest('.single-wrap');
             if (tracksSingle) {
@@ -283,15 +286,54 @@ const SearchMusic = {
                 }
                 let artistID = _this.artistID;
                 let artistParameters = _this.artistParameters;
+                let type = "infor-Single";
                 contentSearch.style.display = "none";
                 allTracks.style.display = "block";
                 $('.nav__search').style.display = "none";
-
                 $('.list__Playlist').style.display = "none";
                 $('.list_Tracks-single').style.display = "flex";
-                TopTracksSingle.handleTracks({ artistID, artistParameters })
+                $('.album_relate-active').style.display = "block";
+                TopTracksSingle.handleTracks({ artistID, artistParameters, type })
             }
 
+        }
+
+        // infor artist track
+        artistRelateWrap.onclick = function (e) {
+            console.log("đây là lần tết")
+            const tracksSingle = e.target.closest('.card_box-sing');
+            if (tracksSingle) {
+                $('.search').style.color = "#fff";
+                iconHeadLeft.style.color = "#fff";
+                // icon left
+                iconHeadLeft.onclick = function () {
+                    $('.search').style.color = "#fff";
+                    iconHeadLeft.style.color = "#fff";
+                    contentSearch.style.display = "block";
+                    allTracks.style.display = "none";
+                }
+                let artistID = _this.artistID;
+                contentSearch.style.display = "none";
+                allTracks.style.display = "block";
+                $('.nav__search').style.display = "none";
+                $('.list__Playlist').style.display = "none";
+                $('.list_Tracks-single').style.display = "flex";
+                $('.album_relate-active').style.display = "none";
+                let type = "infor-RelateSingle";
+                let artistParameters = _this.artistParameters;
+                let artistRelate = _this.artistRelate;
+                // let itemSingle = _this.itemSingle;
+                let tilteArtistRelate = tracksSingle.querySelector('.title_singgle').innerText;
+                console.log(_this.itemSingle.artists[0].name === tilteArtistRelate)
+                if (_this.itemSingle.artists[0].name === tilteArtistRelate) {
+                    console.log(124)
+                    TopTracksSingle.handleTracks({ artistID, artistParameters, type: "infor-Single" })
+                } else {
+                    console.log(235)
+                    TopTracksSingle.handleTracks({ tilteArtistRelate, artistParameters, type, artistRelate });
+                }
+
+            }
         }
 
     },

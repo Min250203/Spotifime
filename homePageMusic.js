@@ -2,6 +2,7 @@ import SearchMusic from "./searchMusic.js";
 import TrackPlaylist from "./trackPlaylist.js";
 
 const searchInput = $('.nav__search-input');
+const homePage = $('.desc__contentmain');
 const CLIENT_ID = "5445f83018404e0994fbce9fcfab2bf9";
 const CLIENT_SECRET = "1451411bff95447e93212555e8752662";
 const musicFor = $('.list__musicForU');
@@ -80,7 +81,7 @@ const HomePageMusic = {
             .catch(error => console.error("e", error))
 
         // data playlist MusicForU (Pop)
-        await fetch('https://api.spotify.com/v1/browse/categories/' + _this.categoriesIDMusicForU + '/playlists' + '?limit=6', _this.categoriesParameters)
+        await fetch('https://api.spotify.com/v1/browse/categories/' + _this.categoriesIDMusicForU + '/playlists' + '?limit=5', _this.categoriesParameters)
             .then(response => response.json())
             .then(data => {
                 _this.playlistMusicForU = data.playlists.items;
@@ -99,7 +100,7 @@ const HomePageMusic = {
         musicFor.innerHTML = listMusicForYou.join("");
 
         // data playlist Tâm trạng (Mood)
-        await fetch('https://api.spotify.com/v1/browse/categories/' + _this.categoriesIDMood + '/playlists' + '?limit=6', _this.categoriesParameters)
+        await fetch('https://api.spotify.com/v1/browse/categories/' + _this.categoriesIDMood + '/playlists' + '?limit=5', _this.categoriesParameters)
             .then(response => response.json())
             .then(data => {
                 _this.playlistMusicMood = data.playlists.items;
@@ -119,7 +120,7 @@ const HomePageMusic = {
 
         // data playlist sức khỏe(Heaalthy)
         let playlistIDHealth;
-        await fetch('https://api.spotify.com/v1/browse/categories/' + _this.categoriesIDHealth + '/playlists' + '?limit=6', _this.categoriesParameters)
+        await fetch('https://api.spotify.com/v1/browse/categories/' + _this.categoriesIDHealth + '/playlists' + '?limit=5', _this.categoriesParameters)
             .then(response => response.json())
             .then(data => {
                 playlistIDHealth = data.playlists.items[0].id;
@@ -140,7 +141,7 @@ const HomePageMusic = {
 
         // data playlist truyền thống(Acoustic)
         let playlistIDAcoustic;
-        await fetch('https://api.spotify.com/v1/browse/categories/' + _this.categoriesIDAcoustic + '/playlists' + '?limit=6', _this.categoriesParameters)
+        await fetch('https://api.spotify.com/v1/browse/categories/' + _this.categoriesIDAcoustic + '/playlists' + '?limit=5', _this.categoriesParameters)
             .then(response => response.json())
             .then(data => {
                 playlistIDAcoustic = data.playlists.items[0].id;
@@ -204,17 +205,18 @@ const HomePageMusic = {
         searchInput.onkeypress = function (e) {
             if (e.key === "Enter") {
                 // icon left
-                iconHeadLeft.onclick = function () {
-                    $('.search').style.color = "#b3b3b3";
-                    $('.home').style.color = "#fff";
-                    iconHeadLeft.style.color = "#9c9c9c";
-                    $('.nav__search').style.display = "none";
-                    mainContent.style.display = "block";
-                    $('.content_search').style.display = "none";
-                    mainInforTracks.style.display = "none";
+                    iconHeadLeft.onclick = function () {
+                        $('.search').style.color = "#b3b3b3";
+                        $('.home').style.color = "#fff";
+                        iconHeadLeft.style.color = "#9c9c9c";
+                        $('.nav__search').style.display = "none";
+                        mainContent.style.display = "block";
+                        $('.content_search').style.display = "none";
+                        mainInforTracks.style.display = "none";
+                   
+                    }
 
-                }
-
+                iconHeadLeft.style.color = "#fff";
                 $('.head__search-title').style.display = "none";
                 $('.categories_search').style.display = "flex";
                 // render all when enter search
@@ -228,6 +230,10 @@ const HomePageMusic = {
                 // albumRelateWrap.style.display = "grid";
                 albumSearchWrap.style.display = "none";
                 allInforSearch.style.display = "block";
+                // tablet
+                homePage.style.display = "none";
+                $('.content_search').style.display = "block";
+
                 let valueInput = e.target.value;
                 let accessToken = _this.accessToken;
                 let type = 'all';
@@ -352,7 +358,7 @@ const HomePageMusic = {
         // when field text
         searchInput.oninput = function (e) {
             // icon left
-            iconHeadLeft.onclick = function () {
+            iconHeadLeft.onclick = function (valueWidth) {
                 $('.search').style.color = "#b3b3b3";
                 $('.home').style.color = "#fff";
                 iconHeadLeft.style.color = "#9c9c9c";
@@ -360,8 +366,13 @@ const HomePageMusic = {
                 mainContent.style.display = "block";
                 $('.content_search').style.display = "none";
                 mainInforTracks.style.display = "none";
+                if (valueWidth.view.innerWidth >= 740 && valueWidth.view.innerWidth <= 1023) {
+                    console.log(0)
+                    $('.nav__search').style.display = "flex";
+                    e.target.value = '';
+                }
             }
-
+            iconHeadLeft.style.color = "#fff";
             $('.head__search-title').style.display = "none";
             $('.categories_search').style.display = "flex";
             // render all when enter search
@@ -370,11 +381,11 @@ const HomePageMusic = {
             singSearch.classList.remove("active");
             allSearch.classList.add("active");
             tracksInforSearch.style.display = "none";
-            // albumsInforSearch.style.display = "none";
-            // albumsInforSearch.style.display = "none";
-            // albumRelateWrap.style.display = "grid";
             albumSearchWrap.style.display = "none";
             allInforSearch.style.display = "block";
+            homePage.style.display = "none";
+            $('.content_search').style.display = "block";
+
             let valueInput = e.target.value;
             let accessToken = _this.accessToken;
             let type = 'all';
@@ -503,6 +514,8 @@ const HomePageMusic = {
         musicFor.onclick = function (e) {
             const playlistIndex = e.target.closest('.playlist__render');
             if (playlistIndex) {
+                mainInforTracks.style.display = "none";
+                iconHeadLeft.style.color = "#fff";
                 let titlePlaylist = playlistIndex.querySelector('.title_singgle').innerText;
                 _this.currentIndex = Number(playlistIndex.getAttribute('data-Index'));
                 let playlistMusicForU = _this.playlistMusicForU;
@@ -521,6 +534,8 @@ const HomePageMusic = {
         musicMood.onclick = function (e) {
             const playlistIndex = e.target.closest('.playlist__render');
             if (playlistIndex) {
+                mainInforTracks.style.display = "none";
+                iconHeadLeft.style.color = "#fff";
                 let titlePlaylist = playlistIndex.querySelector('.title_singgle').innerText;
                 _this.currentIndex = Number(playlistIndex.getAttribute('data-Index'));
                 let playlistMusicMood = _this.playlistMusicMood;
@@ -539,6 +554,8 @@ const HomePageMusic = {
         musicHealth.onclick = function (e) {
             const playlistIndex = e.target.closest('.playlist__render');
             if (playlistIndex) {
+                mainInforTracks.style.display = "none";
+                iconHeadLeft.style.color = "#fff";
                 let titlePlaylist = playlistIndex.querySelector('.title_singgle').innerText;
                 _this.currentIndex = Number(playlistIndex.getAttribute('data-Index'));
                 let playlistMusicHealth = _this.playlistMusicHealth;
@@ -557,6 +574,8 @@ const HomePageMusic = {
         musicAcoustic.onclick = function (e) {
             const playlistIndex = e.target.closest('.playlist__render');
             if (playlistIndex) {
+                mainInforTracks.style.display = "none";
+                iconHeadLeft.style.color = "#fff";
                 let titlePlaylist = playlistIndex.querySelector('.title_singgle').innerText;
                 _this.currentIndex = Number(playlistIndex.getAttribute('data-Index'));
                 let playlistMusicAcoustic = _this.playlistMusicAcoustic;
